@@ -1,4 +1,6 @@
 import tkinter as tk
+from Util import *
+from Battle import Battle  
 
 class GUI():
     def __init__(self):
@@ -17,7 +19,21 @@ class GUI():
         self.button.pack(padx=10, pady=10)
         self.root.mainloop()
 
-    def submit(self):
-        print(self.textbox.get("0.1", tk.END))
+    def clear_textbox(self):
+        self.textbox.delete("0.1", tk.END)
 
-GUI()
+    def submit(self):
+
+        if data.num_selected == 0: 
+            data.pk1 = reqPokemon(self.textbox.get("0.1", tk.END).replace("\n", ''))
+            data.num_selected += 1
+            self.clear_textbox()
+
+        elif data.num_selected == 1: 
+            data.pk2 = reqPokemon(self.textbox.get("0.1", tk.END).replace("\n", ''))
+            data.num_selected += 1
+        
+        if data.num_selected == 2:
+            battle = Battle(data.pk1, data.pk2)
+            battle.run_battle()
+
