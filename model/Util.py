@@ -36,7 +36,8 @@ class Data:
     num_selected = 0
     pk1 = ""
     pk2 = ""
-    battle = ""
+    battle_over_text = ""
+    winner = ""
 
 
 

@@ -1,3 +1,5 @@
+from Util import data
+
 class Battle:
     def __init__(self, pk1, pk2):
         self.pk1 = pk1
@@ -20,6 +22,8 @@ class Battle:
         self.transfer = ""
         self.turn_counter += 1
         if self.initiative.health <= 0:
+            data.battle_over_text = (f"Battle Over! {self.deck.name} has won the battle in {self.turn_counter} turns!")
+            data.winner = self.deck
             return (f"Battle Over! {self.deck.name} has won the battle in {self.turn_counter} turns!")
         return self.return_string
         

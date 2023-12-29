@@ -21,7 +21,7 @@ class GUI():
         self.init_frame = tk.Frame(self.root)
         self.init_frame.pack(fill="x")
 
-        self.label = tk.Label(self.init_frame, text="Enter the first combatant: ", font=("Arial", 16))
+        self.label = tk.Label(self.init_frame, text="Enter a combatant: ", font=("Arial", 16))
         self.label.pack(padx=10, pady=10)
 
         self.textbox = tk.Text(self.init_frame, height=1, width=15, font=("Arial", 18))
@@ -96,7 +96,47 @@ class GUI():
         if data.num_selected == 2:
             data.battle = Battle(data.pk1, data.pk2)
 
+    def end_battle(self):
+        
+
+        print(data.battle_over_text)
+        self.log.destroy()
+        for widget in self.battle_frame.winfo_children():
+            widget.destroy()
+
+        self.label = tk.Label(self.battle_frame, text=data.battle_over_text, font=("Arial", 20))
+        self.label.pack(padx=10, pady=10)
+
+        self.button = tk.Button(self.battle_frame, text="Reset", command=self.battle)
+        self.button.pack(padx=10, pady=10)
+
+        imageUrl = data.winner.sprites[0]
+        print(imageUrl)
+
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+
+
+
+        openedUrl = urlopen(imageUrl)
+        image_data = openedUrl.read()
+        openedUrl.close()
+
+        photo = ImageTk.PhotoImage(data=image_data)
+        label = tk.Label(self.frame, image=photo)
+        label.image=photo
+        label.pack(fill="x")
+
+    def reset(self):
+        data = Data()
+        pass
+
+
     def battle(self):
         self.label = tk.Label(self.log, text="Battle", font=("Arial", 10))
         self.label.config(text=data.battle.take_turn())
         self.label.pack()
+        if len(self.log.winfo_children()) > 5 : self.log.winfo_children()[0].destroy()
+        if "Battle Over" in data.battle_over_text:
+            print(data.battle_over_text)
+            self.end_battle()
