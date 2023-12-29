@@ -13,12 +13,13 @@ class Battle:
         print(f"{pk1.name} and {pk2.name} have entered the battlefield!")
         
     def take_turn(self):
-        self.initiative.attack(self.deck)
+        self.return_string = self.initiative.attack(self.deck)
         self.transfer = self.initiative
         self.initiative = self.deck
         self.deck = self.transfer
         self.transfer = ""
         self.turn_counter += 1
+        return self.return_string
         
     def run_battle(self):
         gameover = False

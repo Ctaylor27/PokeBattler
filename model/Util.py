@@ -15,6 +15,8 @@ def reqPokemon(target):
     resultAttack = json['stats'][1]['base_stat']
     resultDefense = json['stats'][2]['base_stat']
     resultSpeed = json['stats'][5]['base_stat']
+    resultSprites = (json['sprites']['front_default'], json['sprites']['back_default'])
+
 
     print(f"You selected {target} who is a {resultType} type!")
 
@@ -28,12 +30,13 @@ def reqPokemon(target):
         weaknesses.append(entry['name'])
 
 
-    return Pokemon(resultName, resultType, 1, resultHealth, resultAttack, resultDefense, resultSpeed, weaknesses)
+    return Pokemon(resultName, resultType, 1, resultHealth, resultAttack, resultDefense, resultSpeed, weaknesses, resultSprites)
 
 class Data:
     num_selected = 0
     pk1 = ""
     pk2 = ""
+    battle = ""
 
 
 

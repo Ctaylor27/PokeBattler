@@ -1,5 +1,5 @@
 class Pokemon:
-    def __init__(self, name, element, level, health, attack, defense, speed, weaknesses):
+    def __init__(self, name, element, level, health, attack, defense, speed, weaknesses, sprites):
         self.name = name
         self.element = element
         self.level = level
@@ -9,6 +9,7 @@ class Pokemon:
         self.attack_power = attack
         self.defense = defense
         self.weaknesses = weaknesses
+        self.sprites = sprites
             
     def attack(self, target):
         if self.element in target.weaknesses:
@@ -19,7 +20,7 @@ class Pokemon:
             damage = self.attack_power - target.defense
         
         target.health -= damage
-        print(f"{self.name} dealt {damage} to {target.name} reducing their hp to: {target.health}")
+        return (f"{self.name} dealt {damage} to {target.name} reducing their hp to: {target.health}")
         
         if target.health <= 0:
             print(f"{target.name} has feinted!")
