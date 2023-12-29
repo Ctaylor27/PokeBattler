@@ -14,10 +14,10 @@ class Pokemon:
     def attack(self, target):
         if self.element in target.weaknesses:
             print(f"{target.name} is weak to {self.name}")
-            damage = self.attack_power * 2 - target.defense
+            damage = (self.attack_power / 2) - (target.defense / 4)
             
         else:
-            damage = self.attack_power - target.defense
+            damage = (self.attack_power / 2) - (target.defense / 4)
         
         target.health -= damage
         return (f"{self.name} dealt {damage} to {target.name} reducing their hp to: {target.health}")

@@ -19,6 +19,8 @@ class Battle:
         self.deck = self.transfer
         self.transfer = ""
         self.turn_counter += 1
+        if self.initiative.health <= 0:
+            return (f"Battle Over! {self.deck.name} has won the battle in {self.turn_counter} turns!")
         return self.return_string
         
     def run_battle(self):
