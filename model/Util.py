@@ -1,6 +1,5 @@
 import requests 
 from Poke import Pokemon
-from Util import *
 
 def reqPokemon(target):
     response = requests.get(f'https://pokeapi.co/api/v2/pokemon/{target.lower()}')    
@@ -38,7 +37,24 @@ class Data:
     pk2 = ""
     battle_over_text = ""
     winner = ""
+    print("data init")
 
+    @classmethod
+    def create_new_instance(cls):
+        # Class method to create a new instance
+        return cls()
 
+    def delete_self(self):
+        # Optionally, you can perform some cleanup before deleting
+        print(f"Deleting instance with name data")
+
+        # Remove the instance from the instances list
+        # Data.instances.remove(self)
+
+        # Delete the instance
+        del self
+
+        return Data.create_new_instance()
 
 data = Data()
+

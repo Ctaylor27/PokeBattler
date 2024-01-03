@@ -4,6 +4,8 @@ from Battle import Battle
 from PIL import Image, ImageTk
 from urllib.request import urlopen
 
+
+
 class GUI():
     def __init__(self):
         self.root = tk.Tk()
@@ -17,7 +19,18 @@ class GUI():
         self.frame.columnconfigure(2, weight=1)
         self.frame.pack(fill="x")
 
+        self.create_init_frame()
+        
 
+        self.battle_frame = tk.Frame(self.root)
+        self.battle_frame.pack(fill="x")
+
+        self.log = tk.Frame(self.root)
+        self.log.pack(fill="x")
+
+        self.root.mainloop()
+
+    def create_init_frame(self):
         self.init_frame = tk.Frame(self.root)
         self.init_frame.pack(fill="x")
 
@@ -29,14 +42,6 @@ class GUI():
 
         self.button = tk.Button(self.init_frame, text="Enter", command=self.submit)
         self.button.pack(padx=10, pady=10)
-
-        self.battle_frame = tk.Frame(self.root)
-        self.battle_frame.pack(fill="x")
-
-        self.log = tk.Frame(self.root)
-        self.log.pack(fill="x")
-
-        self.root.mainloop()
 
     def clear_textbox(self):
         self.textbox.delete("0.1", tk.END)
@@ -96,23 +101,43 @@ class GUI():
         if data.num_selected == 2:
             data.battle = Battle(data.pk1, data.pk2)
 
+    def clear_frame(self, target):
+
+        if target == "battle_frame":
+            for widget in self.log.winfo_children():
+                widget.destroy()
+            for widget in self.battle_frame.winfo_children():
+                widget.destroy()
+
+            for widget in self.init_frame.winfo_children():
+                widget.destroy()
+        
+        elif target == "init_frame":
+            self.init_frame.destroy()
+
+        elif target == "frame":
+            for widget in self.frame.winfo_children():
+                widget.destroy()
+
+
     def end_battle(self):
         
-
-        print(data.battle_over_text)
-        self.log.destroy()
+        # self.clear_frame("battle_frame")
+        for widget in self.log.winfo_children():
+            widget.destroy()
         for widget in self.battle_frame.winfo_children():
             widget.destroy()
 
         self.label = tk.Label(self.battle_frame, text=data.battle_over_text, font=("Arial", 20))
         self.label.pack(padx=10, pady=10)
 
-        self.button = tk.Button(self.battle_frame, text="Reset", command=self.battle)
+        self.button = tk.Button(self.battle_frame, text="Reset", command=self.reset)
         self.button.pack(padx=10, pady=10)
 
         imageUrl = data.winner.sprites[0]
         print(imageUrl)
 
+        # self.clear_frame('frame')
         for widget in self.frame.winfo_children():
             widget.destroy()
 
@@ -128,15 +153,23 @@ class GUI():
         label.pack(fill="x")
 
     def reset(self):
-        data = Data()
-        pass
+
+        data.delete_self()
+        
+        for widget in self.log.winfo_children():
+            widget.destroy()
+        for widget in self.battle_frame.winfo_children():
+            widget.destroy()
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+        self.create_init_frame()
 
 
     def battle(self):
         self.label = tk.Label(self.log, text="Battle", font=("Arial", 10))
         self.label.config(text=data.battle.take_turn())
         self.label.pack()
+        print("in gui func: " + data.battle_over_text)
         if len(self.log.winfo_children()) > 5 : self.log.winfo_children()[0].destroy()
         if "Battle Over" in data.battle_over_text:
-            print(data.battle_over_text)
             self.end_battle()

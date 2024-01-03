@@ -23,8 +23,9 @@ class Battle:
         self.turn_counter += 1
         if self.initiative.health <= 0:
             data.battle_over_text = (f"Battle Over! {self.deck.name} has won the battle in {self.turn_counter} turns!")
+            print("In battle func " + data.battle_over_text)
             data.winner = self.deck
-            return (f"Battle Over! {self.deck.name} has won the battle in {self.turn_counter} turns!")
+            return (data.battle_over_text)
         return self.return_string
         
     def run_battle(self):

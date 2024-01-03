@@ -21,7 +21,5 @@ class Pokemon:
         
         target.health -= damage
         return (f"{self.name} dealt {damage} to {target.name} reducing their hp to: {target.health}")
-        
-        if target.health <= 0:
-            print(f"{target.name} has feinted!")
+
               
